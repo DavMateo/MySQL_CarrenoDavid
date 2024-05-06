@@ -1,0 +1,31 @@
+CREATE DATABASE storeInformation;
+USE storeInformation;
+
+CREATE TABLE user(
+  id INT UNSIGNED PRIMARY KEY UNIQUE AUTO_INCREMENT,
+  email VARCHAR(75) DEFAULT NULL,
+  firstName VARCHAR(20) NOT NULL,
+  lastName VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE download(
+  id INT UNSIGNED PRIMARY KEY UNIQUE AUTO_INCREMENT,
+  filename VARCHAR(255) NOT NULL,
+  date_timeDownload DATETIME NOT NULL
+);
+
+CREATE TABLE user_has_download(
+  id INT UNSIGNED NOT NULL,
+  idUser INT UNSIGNED NOT NULL,
+  idDownload INT UNSIGNED NOT NULL,
+  PRIMARY KEY(id, idUser, idDownload),
+  FOREIGN KEY(idUser) REFERENCES user(id),
+  FOREIGN KEY(idDownload) REFERENCES download(id)
+);
+
+CREATE TABLE product(
+  id INT UNSIGNED PRIMARY KEY UNIQUE AUTO_INCREMENT,
+  name VARCHAR(150) NOT NULL,
+  idDownload INT UNSIGNED NOT NULL,
+  FOREIGN KEY(idDownload) REFERENCES download(id)
+);
